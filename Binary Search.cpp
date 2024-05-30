@@ -36,32 +36,7 @@ private:
     }
   }
 
-//insertion using loop
-void insertusingloop(int x){
-  Node* newnode=new Node;
-  newnode->data=x;
-  newnode->left=newnode->right=nullptr;
-  if(root==nullptr) root=newnode;
-  Node *temp=root;
-  Node* prev;
-  while(temp!=nullptr){
-    prev=temp;
-    if(temp->data<=x)
-      temp=temp->right;
-    else
-      temp=temp->left;
-  }
-  
-  if(prev->data<=x){
-    
-    prev->right=newnode;
-  }
-  else{
-    prev->left=newnode;
-    
-  }
-  
-}
+
 
   int Get_hightHelper(Node *temp) {
     if (temp == nullptr)
@@ -100,6 +75,32 @@ bool searchByBST(int k){
       insertByRecursion(root, x);
     }
   }
+//insertion using loop
+void insertusingloop(int x){
+  Node* newnode=new Node;
+  newnode->data=x;
+  newnode->left=newnode->right=nullptr;
+  if(root==nullptr) root=newnode;
+  Node *temp=root;
+  Node* prev;
+  while(temp!=nullptr){
+    prev=temp;
+    if(temp->data<=x)
+      temp=temp->right;
+    else
+      temp=temp->left;
+  }
+
+  if(prev->data<=x){
+
+    prev->right=newnode;
+  }
+  else{
+    prev->left=newnode;
+
+  }
+
+}
 
   // how to calc the hight by recusion
 
@@ -170,6 +171,68 @@ bool searchByBST(int k){
       return;
     DisplayByPostOrderHelper(root);
   }
+
+
+//traverse using stack 
+void DisplaybyPreOrder() {
+  if (root == nullptr) return;
+
+  stack<Node*> nodeStack;
+  nodeStack.push(root);
+
+  while (!nodeStack.empty()) {
+    Node* temp = nodeStack.top();
+    nodeStack.pop();
+    cout << temp->data << " ";
+
+    if (temp->right) nodeStack.push(temp->right);
+    if (temp->left) nodeStack.push(temp->left);
+  }
+}
+
+void DisplayByInOrder() {
+  if (root == nullptr) return;
+
+  stack<Node*> nodeStack;
+  Node* temp = root;
+
+  while (temp != nullptr || !nodeStack.empty()) {
+    while (temp != nullptr) {
+      nodeStack.push(temp);
+      temp = temp->left;
+    }
+
+    temp = nodeStack.top();
+    nodeStack.pop();
+    cout << temp->data << " ";
+    temp = temp->right;
+  }
+}
+
+void DisplayByPostOrder() {
+  if (root == nullptr) return;
+
+  stack<Node*> nodeStack1, nodeStack2;
+  nodeStack1.push(root);
+
+  while (!nodeStack1.empty()) {
+    Node* temp = nodeStack1.top();
+    nodeStack1.pop();
+    nodeStack2.push(temp);
+
+    if (temp->left) nodeStack1.push(temp->left);
+    if (temp->right) nodeStack1.push(temp->right);
+  }
+
+  while (!nodeStack2.empty()) {
+    Node* temp = nodeStack2.top();
+    nodeStack2.pop();
+    cout << temp->data << " ";
+  }
+}
+
+
+
 //delete using loop
 void deletUsingLoop(int x) {
   Node *parent = nullptr;
@@ -289,63 +352,7 @@ int getMax(Node *temp) {
     return temp->data;
   return getMax(temp->right);
 }
-//traverse using stack 
-void DisplaybyPreOrder() {
-  if (root == nullptr) return;
 
-  stack<Node*> nodeStack;
-  nodeStack.push(root);
-
-  while (!nodeStack.empty()) {
-    Node* temp = nodeStack.top();
-    nodeStack.pop();
-    cout << temp->data << " ";
-
-    if (temp->right) nodeStack.push(temp->right);
-    if (temp->left) nodeStack.push(temp->left);
-  }
-}
-
-void DisplayByInOrder() {
-  if (root == nullptr) return;
-
-  stack<Node*> nodeStack;
-  Node* temp = root;
-
-  while (temp != nullptr || !nodeStack.empty()) {
-    while (temp != nullptr) {
-      nodeStack.push(temp);
-      temp = temp->left;
-    }
-
-    temp = nodeStack.top();
-    nodeStack.pop();
-    cout << temp->data << " ";
-    temp = temp->right;
-  }
-}
-
-void DisplayByPostOrder() {
-  if (root == nullptr) return;
-
-  stack<Node*> nodeStack1, nodeStack2;
-  nodeStack1.push(root);
-
-  while (!nodeStack1.empty()) {
-    Node* temp = nodeStack1.top();
-    nodeStack1.pop();
-    nodeStack2.push(temp);
-
-    if (temp->left) nodeStack1.push(temp->left);
-    if (temp->right) nodeStack1.push(temp->right);
-  }
-
-  while (!nodeStack2.empty()) {
-    Node* temp = nodeStack2.top();
-    nodeStack2.pop();
-    cout << temp->data << " ";
-  }
-}
 
   
 };
